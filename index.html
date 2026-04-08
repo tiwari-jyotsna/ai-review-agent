@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>AI PR Review Agent – Architecture & Solution</title>
+<title>AI PR Review Agent Proposal</title>
 
 <style>
 
@@ -14,16 +14,34 @@ color:#24292e;
 }
 
 header{
-background:#0d1117;
+background:linear-gradient(120deg,#0f172a,#1e3a8a);
 color:white;
-padding:30px;
+padding:40px;
 }
 
-header h1{margin:0;font-size:32px;}
+header h1{
+margin:0;
+font-size:36px;
+}
 
-header p{color:#c9d1d9;margin-top:8px;}
+header p{
+margin-top:10px;
+color:#dbeafe;
+font-size:16px;
+}
 
-.container{display:flex;}
+.presenter{
+margin-top:15px;
+background:rgba(255,255,255,0.2);
+padding:10px 16px;
+display:inline-block;
+border-radius:6px;
+font-weight:500;
+}
+
+.container{
+display:flex;
+}
 
 .sidebar{
 width:260px;
@@ -48,7 +66,9 @@ color:#0969da;
 text-decoration:none;
 }
 
-.sidebar a:hover{text-decoration:underline;}
+.sidebar a:hover{
+text-decoration:underline;
+}
 
 .content{
 padding:40px;
@@ -83,6 +103,18 @@ padding:20px;
 border-left:4px solid #0969da;
 }
 
+.badge{
+display:inline-block;
+padding:5px 10px;
+border-radius:4px;
+font-size:12px;
+margin-right:5px;
+}
+
+.critical{background:#ffebe9;color:#cf222e;}
+.major{background:#fff8c5;color:#9a6700;}
+.minor{background:#dafbe1;color:#1a7f37;}
+
 .table{
 width:100%;
 border-collapse:collapse;
@@ -93,18 +125,6 @@ margin-top:10px;
 border:1px solid #eaecef;
 padding:10px;
 }
-
-.badge{
-display:inline-block;
-padding:5px 10px;
-border-radius:4px;
-font-size:12px;
-margin-right:6px;
-}
-
-.critical{background:#ffebe9;color:#cf222e;}
-.major{background:#fff8c5;color:#9a6700;}
-.minor{background:#dafbe1;color:#1a7f37;}
 
 .footer{
 margin-top:60px;
@@ -120,7 +140,12 @@ color:#57606a;
 
 <header>
 <h1>AI Pull Request Review Agent</h1>
-<p>Requirement and Solution Architecture</p>
+<p>Automating Code Reviews Using AI</p>
+
+<div class="presenter">
+Idea Presenter: <strong>Jyotsna Tiwari</strong>
+</div>
+
 </header>
 
 <div class="container">
@@ -129,20 +154,85 @@ color:#57606a;
 
 <h3>Documentation</h3>
 
+<a href="#summary">Executive Summary</a>
+<a href="#kpi">Productivity Impact</a>
 <a href="#overview">Overview</a>
 <a href="#requirements">Requirements</a>
 <a href="#rules">Review Rules</a>
 <a href="#architecture">Architecture</a>
 <a href="#workflow">Workflow</a>
+<a href="#comparison">Workflow Improvement</a>
 <a href="#components">Components</a>
 <a href="#llm">LLM Support</a>
 <a href="#review">Review Output</a>
-<a href="#apis">GitHub APIs</a>
-<a href="#structure">Project Structure</a>
+<a href="#roi">Business Impact</a>
 
 </div>
 
 <div class="content">
+
+<section id="summary">
+<h2>Executive Summary</h2>
+
+<div class="card">
+
+<p>
+Engineering teams spend significant time performing manual Pull Request reviews.
+The proposed <b>AI PR Review Agent</b> automates first-level PR reviews using Large Language Models.
+</p>
+
+<p>
+The system analyzes code changes, applies engineering rules, and generates automated feedback including review summaries and inline comments.
+</p>
+
+<p>
+This reduces manual review workload, improves consistency, and accelerates development cycles.
+</p>
+
+</div>
+</section>
+
+
+
+<section id="kpi">
+<h2>Expected Productivity Impact</h2>
+
+<div class="card">
+
+<table class="table">
+
+<tr>
+<th>Metric</th>
+<th>Expected Improvement</th>
+</tr>
+
+<tr>
+<td>PR Review Time</td>
+<td>Up to 40% reduction</td>
+</tr>
+
+<tr>
+<td>Initial Review Feedback</td>
+<td>Instant AI review</td>
+</tr>
+
+<tr>
+<td>Code Quality Consistency</td>
+<td>Standardized rule enforcement</td>
+</tr>
+
+<tr>
+<td>Developer Productivity</td>
+<td>More time for design and development</td>
+</tr>
+
+</table>
+
+</div>
+
+</section>
+
+
 
 <section id="overview">
 <h2>Overview</h2>
@@ -150,18 +240,15 @@ color:#57606a;
 <div class="card">
 
 <p>
-The AI PR Review Agent is an automated system that reviews GitHub Pull Requests using Large Language Models (LLMs).
+The AI PR Review Agent automatically analyzes GitHub Pull Requests using Large Language Models (LLMs).
 </p>
 
 <p>
-The agent analyzes code changes, applies engineering review rules, generates feedback, and posts review comments on the Pull Request.
-</p>
-
-<p>
-The system is designed to run locally using Python scripts and supports multiple LLM providers.
+It detects issues, enforces coding standards, and posts structured feedback directly on the Pull Request.
 </p>
 
 </div>
+
 </section>
 
 
@@ -174,32 +261,22 @@ The system is designed to run locally using Python scripts and supports multiple
 
 <ul>
 
-<li>Read GitHub Pull Requests using GitHub token authentication.</li>
-
+<li>Read GitHub Pull Requests using authentication tokens.</li>
 <li>Fetch changed files and code diffs.</li>
-
 <li>Send code changes to LLM models for analysis.</li>
 
 <li>Apply review rules such as:</li>
 
 <ul>
-<li>Coding standards validation</li>
-<li>Architecture guideline enforcement</li>
+<li>Coding standards</li>
+<li>Architecture guidelines</li>
 <li>Performance checks</li>
 <li>Security checks</li>
 </ul>
 
-<li>Generate AI-based code review.</li>
-
-<li>Classify issues by severity (Critical, Major, Minor).</li>
-
-<li>Post inline comments on specific lines.</li>
-
-<li>Post a summary review comment on the PR.</li>
-
-<li>Support multiple LLM providers.</li>
-
-<li>Run locally on a Windows machine using Python scripts.</li>
+<li>Generate AI-based review feedback.</li>
+<li>Post inline comments on relevant code lines.</li>
+<li>Publish a summary review comment on the PR.</li>
 
 </ul>
 
@@ -215,41 +292,29 @@ The system is designed to run locally using Python scripts and supports multiple
 
 <div class="card">
 
-<p>
-During analysis, the PR Review Agent applies engineering review rules to detect potential problems and improvements.
-</p>
-
 <h3>Coding Standards</h3>
-
 <ul>
-<li>Variable naming conventions</li>
 <li>Code readability</li>
-<li>Method size and complexity</li>
-<li>Proper error handling</li>
+<li>Naming conventions</li>
+<li>Proper exception handling</li>
 </ul>
 
 <h3>Architecture Guidelines</h3>
-
 <ul>
 <li>Controllers should not contain business logic</li>
-<li>Service layers should manage business rules</li>
-<li>Avoid circular dependencies</li>
+<li>Service layer separation</li>
 </ul>
 
 <h3>Performance Checks</h3>
-
 <ul>
 <li>Avoid database queries inside loops</li>
-<li>Detect inefficient data processing</li>
-<li>Prevent unnecessary object creation</li>
+<li>Detect inefficient operations</li>
 </ul>
 
 <h3>Security Checks</h3>
-
 <ul>
 <li>Detect SQL injection risks</li>
 <li>Prevent hardcoded secrets</li>
-<li>Ensure safe input validation</li>
 </ul>
 
 </div>
@@ -315,21 +380,46 @@ GitHub Review Publisher
 
 <pre>
 
-1. Provide GitHub Pull Request URL
-2. Authenticate using GitHub token
-3. Fetch PR files and diff
-4. Build review context
-5. Apply review rules
-   - coding standards
-   - architecture guidelines
-   - performance checks
-   - security checks
-6. Send analysis request to LLM
-7. Generate review insights
-8. Create summary + inline comments
-9. Publish review to GitHub PR
+1. Provide Pull Request URL
+2. Fetch PR changes via GitHub API
+3. Build analysis context
+4. Apply review rules
+5. Send code diff to LLM
+6. Generate review insights
+7. Create inline comments
+8. Publish summary review
 
 </pre>
+
+</div>
+
+</section>
+
+
+
+<section id="comparison">
+
+<h2>Development Workflow Improvement</h2>
+
+<div class="card">
+
+<h3>Current Workflow</h3>
+
+<ul>
+<li>Developer raises Pull Request</li>
+<li>Wait for reviewer availability</li>
+<li>Manual review for coding standards</li>
+<li>Multiple review cycles</li>
+</ul>
+
+<h3>With AI PR Review Agent</h3>
+
+<ul>
+<li>Developer raises Pull Request</li>
+<li>AI performs instant review</li>
+<li>Coding standards automatically enforced</li>
+<li>Issues resolved before human review</li>
+</ul>
 
 </div>
 
@@ -352,17 +442,17 @@ GitHub Review Publisher
 
 <tr>
 <td>GitHub Adapter</td>
-<td>Handles authentication and API communication with GitHub</td>
+<td>Handles GitHub API authentication and communication</td>
 </tr>
 
 <tr>
 <td>PR Data Collector</td>
-<td>Retrieves changed files, diffs, and metadata</td>
+<td>Fetches changed files and diffs</td>
 </tr>
 
 <tr>
 <td>Context Builder</td>
-<td>Builds structured prompt for LLM review</td>
+<td>Creates structured LLM prompt</td>
 </tr>
 
 <tr>
@@ -377,7 +467,7 @@ GitHub Review Publisher
 
 <tr>
 <td>Review Publisher</td>
-<td>Posts summary and inline comments to GitHub</td>
+<td>Posts comments on GitHub PR</td>
 </tr>
 
 </table>
@@ -395,17 +485,11 @@ GitHub Review Publisher
 <div class="card">
 
 <ul>
-
 <li>OpenAI</li>
 <li>Google Gemini</li>
 <li>Anthropic Claude</li>
-<li>AWS Bedrock Models</li>
-
+<li>AWS Bedrock</li>
 </ul>
-
-<p>
-The architecture uses a provider abstraction layer allowing the system to switch between models without changing the core logic.
-</p>
 
 </div>
 
@@ -429,7 +513,7 @@ AI PR Review Summary
 
 Critical Issues
 ---------------
-Null pointer risk in PaymentService
+Null pointer risk detected
 
 Major Improvements
 ------------------
@@ -447,59 +531,23 @@ Improve variable naming
 
 
 
-<section id="apis">
+<section id="roi">
 
-<h2>GitHub APIs Used</h2>
-
-<div class="card">
-
-<h3>Fetch PR Files</h3>
-
-<pre>
-GET /repos/{owner}/{repo}/pulls/{pr}/files
-</pre>
-
-<h3>Create Review</h3>
-
-<pre>
-POST /repos/{owner}/{repo}/pulls/{pr}/reviews
-</pre>
-
-</div>
-
-</section>
-
-
-
-<section id="structure">
-
-<h2>Project Structure</h2>
+<h2>Business Impact</h2>
 
 <div class="card">
 
-<pre>
+<p>
+Introducing an AI-powered PR Review Agent enables engineering teams to scale code review practices efficiently.
+</p>
 
-pr-review-agent
-│
-├── main.py
-│
-├── github
-│   └── github_client.py
-│
-├── llm
-│   ├── openai_provider.py
-│   ├── gemini_provider.py
-│   ├── claude_provider.py
-│   └── bedrock_provider.py
-│
-├── review
-│   ├── context_builder.py
-│   └── review_engine.py
-│
-└── models
-    └── review_result.py
-
-</pre>
+<ul>
+<li>Reduce manual reviewer workload</li>
+<li>Improve development velocity</li>
+<li>Ensure consistent engineering standards</li>
+<li>Detect issues earlier in development cycle</li>
+<li>Improve software quality</li>
+</ul>
 
 </div>
 
@@ -507,7 +555,7 @@ pr-review-agent
 
 
 <div class="footer">
-AI PR Review Agent – Architecture Documentation
+AI PR Review Agent Proposal • Prepared for Engineering Leadership
 </div>
 
 </div>
