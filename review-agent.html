@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AI Pull Request Review Agent</title>
+
+<style>
+
+body{
+margin:0;
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial;
+background:#f6f8fb;
+color:#2d3748;
+}
+
+.layout{
+display:flex;
+}
+
+/* Sidebar */
+
+.sidebar{
+width:260px;
+background:#111827;
+color:white;
+height:100vh;
+position:fixed;
+padding:30px 20px;
+overflow:auto;
+}
+
+.sidebar h2{
+font-size:18px;
+margin-bottom:20px;
+}
+
+.sidebar a{
+display:block;
+color:#cbd5e1;
+text-decoration:none;
+margin-bottom:10px;
+font-size:14px;
+}
+
+.sidebar a:hover{
+color:white;
+}
+
+/* Content */
+
+.content{
+margin-left:260px;
+padding:50px;
+max-width:1100px;
+}
+
+h1{
+font-size:40px;
+margin-bottom:10px;
+}
+
+h2{
+margin-top:40px;
+border-bottom:2px solid #e5e7eb;
+padding-bottom:10px;
+color:#2563eb;
+}
+
+h3{
+margin-top:30px;
+color:#1d4ed8;
+}
+
+/* Cards */
+
+.card{
+background:white;
+padding:25px;
+border-radius:10px;
+box-shadow:0 10px 30px rgba(0,0,0,0.05);
+margin-top:20px;
+}
+
+/* Tables */
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+}
+
+th{
+background:#2563eb;
+color:white;
+padding:12px;
+text-align:left;
+}
+
+td{
+padding:12px;
+border-bottom:1px solid #e5e7eb;
+}
+
+/* Code */
+
+pre{
+background:#111827;
+color:#e5e7eb;
+padding:20px;
+border-radius:10px;
+overflow:auto;
+}
+
+code{
+background:#eef2ff;
+padding:4px 8px;
+border-radius:6px;
+}
+
+/* Architecture */
+
+.pipeline{
+font-family:monospace;
+background:#eef2ff;
+padding:20px;
+border-radius:10px;
+}
+
+/* Badges */
+
+.badge{
+display:inline-block;
+background:#2563eb;
+color:white;
+padding:5px 10px;
+border-radius:6px;
+font-size:12px;
+margin-right:5px;
+}
+
+/* Notes */
+
+.note{
+background:#eff6ff;
+border-left:4px solid #2563eb;
+padding:15px;
+border-radius:6px;
+margin-top:20px;
+}
+
+/* Footer */
+
+.footer{
+margin-top:60px;
+text-align:center;
+color:#6b7280;
+font-size:14px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="layout">
+
+<div class="sidebar">
+
+<h2>AI PR Review Agent</h2>
+
+<a href="#overview">Overview</a>
+<a href="#how">How it works</a>
+<a href="#features">Features</a>
+<a href="#providers">LLM Providers</a>
+<a href="#structure">Project Structure</a>
+<a href="#setup">Setup</a>
+<a href="#config">Configuration</a>
+<a href="#usage">Usage</a>
+<a href="#cli">CLI Reference</a>
+<a href="#example">Example Review</a>
+<a href="#rules">Custom Rules</a>
+<a href="#troubleshooting">Troubleshooting</a>
+<a href="#benefits">Benefits</a>
+
+</div>
+
+<div class="content">
+
+<h1>AI Pull Request Review Agent</h1>
+
+<p>
+Automated GitHub pull request review agent that analyzes diffs using LLMs and posts structured review comments directly on the PR.
+</p>
+
+<div>
+
+<span class="badge">AI</span>
+<span class="badge">GitHub</span>
+<span class="badge">Code Review</span>
+<span class="badge">Automation</span>
+
+</div>
+
+<h2 id="overview">Overview</h2>
+
+<div class="card">
+
+<p>
+Code review is one of the most valuable yet time-consuming parts of development.  
+This tool automates the first pass of PR reviews by analyzing code diffs and applying engineering rules.
+</p>
+
+<ul>
+<li>Provider-agnostic LLM integration</li>
+<li>CI/CD friendly CLI</li>
+<li>Custom rule engine</li>
+<li>Duplicate review prevention</li>
+<li>Fully configurable through .env</li>
+</ul>
+
+</div>
+
+<h2 id="how">How It Works</h2>
+
+<div class="pipeline">
+
+GitHub PR URL  
+↓  
+Fetch PR files via GitHub API  
+↓  
+Chunk large diffs into LLM-friendly segments  
+↓  
+Build prompt using engineering rules  
+↓  
+Send chunks to selected LLM provider  
+↓  
+Receive structured JSON review  
+↓  
+Filter and snap comments to valid diff lines  
+↓  
+Deduplicate previous reviews  
+↓  
+Post inline comments + summary to GitHub  
+
+</div>
+
+<h2 id="features">Features</h2>
+
+<table>
+
+<tr>
+<th>Feature</th>
+<th>Description</th>
+</tr>
+
+<tr>
+<td>Multi-provider support</td>
+<td>OpenAI, Gemini, Claude, Groq, Grok, Bedrock</td>
+</tr>
+
+<tr>
+<td>Structured JSON output</td>
+<td>Summary + inline review comments</td>
+</tr>
+
+<tr>
+<td>Diff chunking</td>
+<td>Handles large PRs automatically</td>
+</tr>
+
+<tr>
+<td>Comment snapping</td>
+<td>Fixes slightly inaccurate LLM line numbers</td>
+</tr>
+
+<tr>
+<td>Review deduplication</td>
+<td>SHA-256 fingerprint prevents duplicate reviews</td>
+</tr>
+
+<tr>
+<td>Draft review support</td>
+<td>Post GitHub draft reviews</td>
+</tr>
+
+<tr>
+<td>Dry run</td>
+<td>Generate review without posting</td>
+</tr>
+
+<tr>
+<td>Custom rules</td>
+<td>Load engineering rules via JSON</td>
+</tr>
+
+</table>
+
+<h2 id="providers">Supported LLM Providers</h2>
+
+<table>
+
+<tr>
+<th>Provider</th>
+<th>Flag</th>
+<th>Env Var</th>
+</tr>
+
+<tr>
+<td>Google Gemini</td>
+<td>gemini</td>
+<td>GEMINI_API_KEY</td>
+</tr>
+
+<tr>
+<td>Groq</td>
+<td>groq</td>
+<td>GROQ_API_KEY</td>
+</tr>
+
+<tr>
+<td>OpenAI</td>
+<td>openai</td>
+<td>OPENAI_API_KEY</td>
+</tr>
+
+<tr>
+<td>Anthropic Claude</td>
+<td>claude</td>
+<td>ANTHROPIC_API_KEY</td>
+</tr>
+
+<tr>
+<td>AWS Bedrock</td>
+<td>bedrock</td>
+<td>AWS_ACCESS_KEY_ID</td>
+</tr>
+
+<tr>
+<td>xAI Grok</td>
+<td>grok</td>
+<td>GROK_API_KEY</td>
+</tr>
+
+</table>
+
+<h2 id="structure">Project Structure</h2>
+
+<pre>
+
+ai-review-agent/
+ ├ main.py
+ ├ rules/
+ ├ scripts/
+ └ pr_review_agent/
+     ├ github/
+     ├ llm/
+     ├ models/
+     └ review/
+
+</pre>
+
+<h2 id="setup">Setup</h2>
+
+<pre>
+
+git clone https://github.com/your-org/ai-review-agent.git
+cd ai-review-agent
+
+python -m venv .venv
+source .venv/bin/activate
+
+pip install -r requirements.txt
+
+</pre>
+
+<h2 id="config">Configuration</h2>
+
+<pre>
+
+GITHUB_TOKEN=your_token
+
+GEMINI_API_KEY=
+OPENAI_API_KEY=
+ANTHROPIC_API_KEY=
+GROQ_API_KEY=
+
+LOG_LEVEL=INFO
+HTTP_TIMEOUT_SECONDS=30
+
+</pre>
+
+<h2 id="usage">Usage</h2>
+
+<pre>
+
+./scripts/run_review.sh \
+ --pr_url https://github.com/org/repo/pull/42 \
+ --provider groq
+
+</pre>
+
+<h2 id="cli">CLI Reference</h2>
+
+<table>
+
+<tr>
+<th>Flag</th>
+<th>Description</th>
+</tr>
+
+<tr>
+<td>--pr_url</td>
+<td>GitHub Pull Request URL</td>
+</tr>
+
+<tr>
+<td>--provider</td>
+<td>LLM provider</td>
+</tr>
+
+<tr>
+<td>--model</td>
+<td>Override default model</td>
+</tr>
+
+<tr>
+<td>--dry_run</td>
+<td>Print review JSON only</td>
+</tr>
+
+</table>
+
+<h2 id="example">Example Review Output</h2>
+
+<pre>
+
+Wallet Service Code Review
+
+Critical issues
+- Missing validation
+- Potential NPE
+
+Major issues
+- Missing transactional annotation
+
+Inline comments
+- 3 comments added
+
+</pre>
+
+<h2 id="rules">Custom Review Rules</h2>
+
+<pre>
+
+{
+ "categories":[
+  {
+   "name":"API Design",
+   "rules":[
+    "REST endpoints must use nouns",
+    "pagination required"
+   ]
+  }
+ ]
+}
+
+</pre>
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+
+<div class="note">
+
+<b>403 Forbidden</b><br>
+Your GitHub token must have Pull Requests Read and Write permission.
+
+</div>
+
+<div class="note">
+
+<b>Gemini 503 Error</b><br>
+Switch to a stable model like <code>gemini-2.0-flash</code>.
+
+</div>
+
+<h2 id="benefits">Benefits</h2>
+
+<ul>
+
+<li>Automated first-pass PR review</li>
+<li>Catch security issues early</li>
+<li>Reduce manual review time</li>
+<li>Improve engineering consistency</li>
+<li>No vendor lock-in</li>
+
+</ul>
+
+<div class="footer">
+
+AI Pull Request Review Agent Documentation
+
+</div>
+
+</div>
+
+</div>
+
+</body>
+</html>
