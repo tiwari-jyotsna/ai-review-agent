@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Timesheet Automation Dashboard</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #0f172a;
+      color: #e2e8f0;
+    }
+
+    header {
+      padding: 20px;
+      text-align: center;
+      background: #1e293b;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .container {
+      padding: 20px;
+    }
+
+    .card {
+      background: #1e293b;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    .title {
+      font-size: 18px;
+      margin-bottom: 10px;
+      color: #38bdf8;
+    }
+
+    .timeline {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .step {
+      flex: 1;
+      min-width: 150px;
+      margin: 10px;
+      padding: 15px;
+      background: #0f172a;
+      border-radius: 10px;
+      text-align: center;
+      border: 1px solid #334155;
+    }
+
+    .step h4 {
+      margin: 5px 0;
+      color: #22c55e;
+    }
+
+    .flow {
+      text-align: center;
+      font-size: 16px;
+      line-height: 2;
+    }
+
+    .highlight {
+      color: #facc15;
+      font-weight: bold;
+    }
+
+    footer {
+      text-align: center;
+      padding: 10px;
+      font-size: 12px;
+      color: #94a3b8;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  ⏱️ Timesheet Automation Dashboard
+</header>
+
+<div class="container">
+
+  <!-- Weekly Flow -->
+  <div class="card">
+    <div class="title">📅 Weekly Automation Flow</div>
+    <div class="flow">
+      Daily Reminder → Thursday Warning → Friday Final Reminder → 
+      <span class="highlight">Submission Deadline (6 PM)</span> → Manager Escalation
+    </div>
+  </div>
+
+  <!-- Timeline -->
+  <div class="card">
+    <div class="title">⏳ Reminder Timeline</div>
+
+    <div class="timeline">
+      <div class="step">
+        <h4>Daily</h4>
+        <p>Slack Reminder<br/>5 PM</p>
+      </div>
+
+      <div class="step">
+        <h4>Thursday</h4>
+        <p>Incomplete Warning</p>
+      </div>
+
+      <div class="step">
+        <h4>Friday Noon</h4>
+        <p>Final Reminder</p>
+      </div>
+
+      <div class="step">
+        <h4>Friday 6 PM</h4>
+        <p>Deadline</p>
+      </div>
+
+      <div class="step">
+        <h4>Post Deadline</h4>
+        <p>Manager Escalation</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Defaulter Section -->
+  <div class="card">
+    <div class="title">🚨 Defaulter Handling</div>
+    <p>
+      Users who fail to submit timesheets are automatically identified via Tempo Reports.
+      A scheduled report is shared with managers every Friday evening.
+    </p>
+  </div>
+
+  <!-- Tools -->
+  <div class="card">
+    <div class="title">⚙️ Tools Used</div>
+    <ul>
+      <li>Jira Automation (Scheduled Reminders)</li>
+      <li>Tempo Timesheets (Tracking & Approval)</li>
+      <li>Slack / Email (Notifications)</li>
+    </ul>
+  </div>
+
+</div>
+
+<footer>
+  Built for Automation | Zero Manual Follow-ups 🚀
+</footer>
+
+</body>
+</html>
