@@ -1,122 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timesheet Automation Options</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f9f9f9;
+            line-height: 1.6;
+        }
+        h1, h2 {
+            color: #2c3e50;
+        }
+        .card {
+            background: #fff;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .flow {
+            background: #f0f4ff;
+            padding: 10px;
+            border-left: 4px solid #4a6cf7;
+            margin: 10px 0;
+            font-family: monospace;
+        }
+        .highlight {
+            color: #d35400;
+            font-weight: bold;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: #fff;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background: #2c3e50;
+            color: #fff;
+        }
+        tr:nth-child(even) {
+            background: #f2f2f2;
+        }
+        .tag {
+            display: inline-block;
+            padding: 3px 8px;
+            background: #e3f2fd;
+            border-radius: 4px;
+            margin-right: 5px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
 
+<h1>🚀 Timesheet Automation Strategy</h1>
 
+<div class="card">
+    <h2>Option 1: Native Automation (Best starting point)</h2>
 
+    <p><strong>Use:</strong> Jira Automation rules</p>
 
-Currently in the organization we use tempo in Jira for timesheet . 
+    <h3>What you can automate:</h3>
+    <ul>
+        <li>Weekly reminders</li>
+        <li>Conditional nudges (only to defaulters)</li>
+        <li>Escalation to managers</li>
+    </ul>
 
-Each person fill the logged efforts and send for approval every week . 
-
-Problem - sometimes resource forget and manager has to follow up which is time taking .. 
-
-
-
-can we automate this process so that by end of the week everyone should submit the timesheet. 
-
-Yes — and honestly, you should automate this. Manual follow-ups for timesheets are a pure waste of manager bandwidth.
-
-Here’s a practical, no-BS approach to fix it using what you already have (Jira + Tempo Timesheets).
-
-🔧 Option 1: Native Automation (Best starting point)
-Use Jira Automation rules
-
-What you can automate:
-Weekly reminders
-
-Conditional nudges (only to defaulters)
-
-Escalation to managers
-
-Flow:
+    <div class="flow">
 Every Friday 4 PM
-   ↓
+↓
 Check Tempo logs (via API / workaround)
-   ↓
-If < required hours
-   ↓
+↓
+If &lt; required hours
+↓
 Send reminder (Slack/Email)
-Implementation:
-Trigger: Scheduled (Friday 4 PM)
+    </div>
 
-Action:
+    <h3>Implementation:</h3>
+    <ul>
+        <li>Trigger: Scheduled (Friday 4 PM)</li>
+        <li>Action: Send message via Slack / Teams / Email</li>
+    </ul>
 
-Send message via:
+    <p class="highlight">Limitation: Jira Automation can’t directly read Tempo logs cleanly.</p>
+</div>
 
-Slack
+<div class="card">
+    <h2>Option 2: Smart Automation via API (Best real solution)</h2>
 
-Microsoft Teams
+    <h3>Stack:</h3>
+    <span class="tag">Tempo API</span>
+    <span class="tag">Node / Python</span>
+    <span class="tag">Cron / Cloud Function</span>
 
-Email
-
-👉 Limitation: Jira Automation can’t directly read Tempo logs cleanly, so you’ll need:
-
-Tempo API OR
-
-A workaround (custom field / script)
-
-⚡ Option 2: Smart Automation via API (Best real solution)
-This is what mature teams do.
-
-Stack:
-Tempo API
-
-Small backend script (Node/Python)
-
-Scheduler (cron / cloud function)
-
-Flow:
+    <div class="flow">
 Fetch all users
-   ↓
+↓
 Call Tempo API → get logged hours
-   ↓
-Compare vs expected (e.g., 40 hrs/week)
-   ↓
+↓
+Compare vs expected (40 hrs/week)
+↓
 If incomplete → send reminder
-   ↓
-If still incomplete → escalate to manager
-Tools:
-Zapier (low-code)
+↓
+If still incomplete → escalate
+    </div>
 
-Make (more powerful)
+    <h3>Tools:</h3>
+    <ul>
+        <li>Zapier (low-code)</li>
+        <li>Make (advanced)</li>
+        <li>AWS Lambda / Cron</li>
+    </ul>
+</div>
 
-Or simple AWS Lambda / cron job
+<div class="card">
+    <h2>Option 3: Zero-Effort Nudging System (Most effective)</h2>
 
-🧠 Option 3: Zero-Effort Nudging System (Most effective)
-Don’t rely on end-of-week panic. Fix behavior.
+    <h3>Strategy:</h3>
+    <ul>
+        <li>Daily reminder (5 PM)</li>
+        <li>Thursday warning</li>
+        <li>Friday strict reminder</li>
+    </ul>
 
-Strategy:
-Daily reminder (5 PM): “Log your time before leaving”
+    <p class="highlight">Reduces failure rate by 80%+</p>
+</div>
 
-Thursday warning: “Only 1 day left”
+<div class="card">
+    <h2>Option 4: Hard Enforcement</h2>
 
-Friday strict reminder: “Submission deadline today”
+    <h3>If people still ignore:</h3>
+    <ul>
+        <li>Block leave approvals</li>
+        <li>Restrict sprint participation</li>
+        <li>Impact performance metrics</li>
+    </ul>
 
-👉 This reduces failure rate by 80%+
+    <p class="highlight">Brutal but effective</p>
+</div>
 
-🚨 Option 4: Hard Enforcement (If culture allows)
-If people still ignore:
+<div class="card">
+    <h2>💡 Recommended Setup</h2>
+    <ul>
+        <li>Daily Slack reminder (5 PM)</li>
+        <li>Friday 3 PM smart check via API</li>
+        <li>Auto-reminder only to defaulters</li>
+        <li>Friday 6 PM escalation to manager</li>
+    </ul>
+</div>
 
-Block:
-
-Leave approvals
-
-Sprint participation
-
-Performance metrics impact
-
-👉 Brutal but effective.
-
-💡 Recommended Setup (Best Balance)
-Do THIS:
-
-Daily Slack reminder (5 PM)
-
-Friday 3 PM smart check via Tempo API
-
-Auto-reminder only to defaulters
-
-Friday 6 PM escalation to manager
-
-🧩 Sample Slack Message
+<div class="card">
+    <h2>🧩 Sample Slack Message</h2>
+    <div class="flow">
 Hi {Name},
 
 You’ve logged only {X} hours this week.
@@ -124,702 +169,111 @@ You’ve logged only {X} hours this week.
 Please complete your timesheet before 6 PM today.
 
 Thanks.
-🏁 Bottom Line
-Yes, this is 100% automatable.
-
-If you’re still chasing people manually:
-👉 It’s not a people problem — it’s a system design problem.
-
-If you want, I can give you:
-
-Exact Tempo API script (plug-and-play)
-
-Jira Automation rule JSON
-
-Slack webhook setup
-
-Just tell me your preferred approach (no-code vs code).
-
-
-No Code . 
-
-Perfect — then we’ll build a fully no-code, production-grade solution. No scripts, no backend, just configuration.
-
-Your best stack:
-👉 Tempo Timesheets + Jira Automation + Slack (or Email/Teams)
-
-🧠 Reality Check (Important)
-Tempo does NOT expose timesheet completion directly inside Jira Automation.
-
-👉 So pure Jira Automation alone = not enough
-
-✅ Solution: Use Tempo built-in reports + scheduled reminders
-
-✅ BEST NO-CODE SETUP (What actually works)
-🔹 Step 1: Use Tempo "Timesheet Approval Period"
-Inside Tempo settings:
-
-Set:
-
-Period: Weekly
-
-Submission deadline: Friday 6 PM
-
-Require approval: ✅
-
-👉 This creates a formal process
-
-🔹 Step 2: Enable Tempo Reminders (Hidden Gold Feature)
-In Tempo → Settings → Notifications:
-
-Configure:
-
-📅 Reminder Plan
-Thursday → “Incomplete timesheet reminder”
-
-Friday noon → “Final reminder”
-
-Friday evening → “Overdue warning”
-
-👉 These go automatically to users
-
-🔹 Step 3: Add Smart Escalation (Manager Visibility)
-Use Tempo Reports:
-
-Create report: “Users with incomplete timesheets”
-
-Schedule it weekly (Friday evening)
-
-Send to:
-
-Managers
-
-Delivery leads
-
-👉 Now managers don’t chase manually — they just see defaulters
-
-🔹 Step 4: Slack Integration (Optional but Powerful)
-Connect Jira ↔ Slack using:
-
-Jira Cloud for Slack
-
-Then:
-
-Create automation:
-
-Trigger: Scheduled (Friday 3 PM)
-
-Action: Send message to channel:
-
-Reminder: Submit your Tempo timesheet before 6 PM today.
-👉 This creates team-level pressure (very effective)
-
-🔥 FINAL FLOW (No-Code System)
-Daily → (optional Slack reminder)
-
-Thursday → Tempo auto reminder
-
-Friday 12 PM → Tempo reminder
-
-Friday 3 PM → Slack team reminder
-
-Friday 6 PM → Deadline
-
-Friday evening → Auto report to managers
-🚀 Why This Works
-No dependency on manager follow-up ❌
-
-Multiple nudges (behavior correction) ✅
-
-Visibility to leadership ✅
-
-Zero engineering effort ✅
-
-⚠️ What NOT to do
-Don’t rely on only Friday reminder → people forget
-
-Don’t rely on manager chasing → not scalable
-
-Don’t try to hack Jira Automation for Tempo data → limited
-
-🏁 Bottom Line
-👉 With just Tempo + reminders + reports
-You can eliminate 90% of follow-ups
-
-If you want next level (still no-code), I can show:
-👉 How to send only defaulter-specific Slack messages (smart targeting using Zapier)
-
-Just say “advanced setup”.
-
-
-create the HTML for the entrier page 
-
-Got it — here’s a clean, production-ready HTML page for your Timesheet Automation Dashboard (No-Code Setup).
-
-This is designed like something you can show to leadership 👇
-
-🚀 Features in this page
-Weekly flow visualization
-
-Reminder timeline
-
-Manager escalation section
-
-Clean modern UI (no framework needed)
-
-Ready to plug into internal portal
-
-🧾 HTML (Copy-Paste Ready)
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Timesheet Automation Dashboard</title>
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background: #0f172a;
-      color: #e2e8f0;
-    }
-
-    header {
-      padding: 20px;
-      text-align: center;
-      background: #1e293b;
-      font-size: 24px;
-      font-weight: bold;
-    }
-
-    .container {
-      padding: 20px;
-    }
-
-    .card {
-      background: #1e293b;
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    }
-
-    .title {
-      font-size: 18px;
-      margin-bottom: 10px;
-      color: #38bdf8;
-    }
-
-    .timeline {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-    }
-
-    .step {
-      flex: 1;
-      min-width: 150px;
-      margin: 10px;
-      padding: 15px;
-      background: #0f172a;
-      border-radius: 10px;
-      text-align: center;
-      border: 1px solid #334155;
-    }
-
-    .step h4 {
-      margin: 5px 0;
-      color: #22c55e;
-    }
-
-    .flow {
-      text-align: center;
-      font-size: 16px;
-      line-height: 2;
-    }
-
-    .highlight {
-      color: #facc15;
-      font-weight: bold;
-    }
-
-    footer {
-      text-align: center;
-      padding: 10px;
-      font-size: 12px;
-      color: #94a3b8;
-    }
-  </style>
-</head>
-
-<body>
-
-<header>
-  ⏱️ Timesheet Automation Dashboard
-</header>
-
-<div class="container">
-
-  <!-- Weekly Flow -->
-  <div class="card">
-    <div class="title">📅 Weekly Automation Flow</div>
-    <div class="flow">
-      Daily Reminder → Thursday Warning → Friday Final Reminder → 
-      <span class="highlight">Submission Deadline (6 PM)</span> → Manager Escalation
     </div>
-  </div>
-
-  <!-- Timeline -->
-  <div class="card">
-    <div class="title">⏳ Reminder Timeline</div>
-
-    <div class="timeline">
-      <div class="step">
-        <h4>Daily</h4>
-        <p>Slack Reminder<br/>5 PM</p>
-      </div>
-
-      <div class="step">
-        <h4>Thursday</h4>
-        <p>Incomplete Warning</p>
-      </div>
-
-      <div class="step">
-        <h4>Friday Noon</h4>
-        <p>Final Reminder</p>
-      </div>
-
-      <div class="step">
-        <h4>Friday 6 PM</h4>
-        <p>Deadline</p>
-      </div>
-
-      <div class="step">
-        <h4>Post Deadline</h4>
-        <p>Manager Escalation</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Defaulter Section -->
-  <div class="card">
-    <div class="title">🚨 Defaulter Handling</div>
-    <p>
-      Users who fail to submit timesheets are automatically identified via Tempo Reports.
-      A scheduled report is shared with managers every Friday evening.
-    </p>
-  </div>
-
-  <!-- Tools -->
-  <div class="card">
-    <div class="title">⚙️ Tools Used</div>
-    <ul>
-      <li>Jira Automation (Scheduled Reminders)</li>
-      <li>Tempo Timesheets (Tracking & Approval)</li>
-      <li>Slack / Email (Notifications)</li>
-    </ul>
-  </div>
-
 </div>
 
-<footer>
-  Built for Automation | Zero Manual Follow-ups 🚀
-</footer>
+<div class="card">
+    <h2>🏁 Bottom Line</h2>
+    <p>
+        This is <strong>100% automatable</strong>.
+        <br><br>
+        If you’re still chasing people manually:
+        <span class="highlight">It’s not a people problem — it’s a system design problem.</span>
+    </p>
+</div>
+
+<h2>📊 Comparison Table</h2>
+
+<table>
+    <tr>
+        <th>Option</th>
+        <th>Approach</th>
+        <th>Features</th>
+        <th>Effort</th>
+        <th>Code</th>
+        <th>Cost</th>
+        <th>Scalability</th>
+        <th>Accuracy</th>
+        <th>Best For</th>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>Jira Automation</td>
+        <td>Basic reminders</td>
+        <td>Low</td>
+        <td>No</td>
+        <td>Free</td>
+        <td>Limited</td>
+        <td>Low</td>
+        <td>Small teams</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>Tempo Native</td>
+        <td>Reports, approvals</td>
+        <td>Low-Medium</td>
+        <td>No</td>
+        <td>Licensed</td>
+        <td>Good</td>
+        <td>Medium</td>
+        <td>Most teams</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>Slack Integration</td>
+        <td>Team nudges</td>
+        <td>Low-Medium</td>
+        <td>No</td>
+        <td>Free</td>
+        <td>Good</td>
+        <td>Low</td>
+        <td>Culture-driven teams</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>Zapier / Make</td>
+        <td>Targeted automation</td>
+        <td>Medium</td>
+        <td>No</td>
+        <td>Paid</td>
+        <td>High</td>
+        <td>High</td>
+        <td>Growing teams</td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>Custom Script</td>
+        <td>Full automation</td>
+        <td>High</td>
+        <td>Yes</td>
+        <td>Low infra</td>
+        <td>Very High</td>
+        <td>Very High</td>
+        <td>Mature org</td>
+    </tr>
+    <tr>
+        <td>6</td>
+        <td>Policy Enforcement</td>
+        <td>Blocking, penalties</td>
+        <td>Medium</td>
+        <td>No</td>
+        <td>Free</td>
+        <td>Very High</td>
+        <td>Very High</td>
+        <td>Strict org</td>
+    </tr>
+</table>
+
+<div class="card">
+    <h2>🧠 Final Recommendation (No-Code)</h2>
+    <p>
+        <strong>Best Setup:</strong> Option 2 + Option 3
+        <br><br>
+        ✔ Zero effort <br>
+        ✔ No cost <br>
+        ✔ Solves 80–90% problem
+    </p>
+</div>
 
 </body>
 </html>
-🎯 What this gives you
-Clean demo-ready UI
-
-Can be shown in:
-
-Leadership presentations
-
-Internal portal
-
-Demo video (your earlier ask)
-
-🚀 Want next level?
-I can upgrade this into:
-
-Animated flow (like system architecture diagram)
-
-Live data dashboard (with % compliance)
-
-React / Compose version (pixel-perfect like your earlier requirement)
-
-Just tell me 👍
-
-
-summarise all options in a tablur form with diffent feature , efforts, code/no code any cost ,etc.. 
-
-Here’s a clear, decision-making table — no fluff, just what leadership actually cares about 👇
-
-📊 Timesheet Automation Options Comparison
-Option	Approach	Features	Effort	Code Required	Cost	Scalability	Accuracy (Defaulter Detection)	Best For
-1	Jira Automation Only	Basic reminders (email/Slack), scheduled nudges	⭐ Low	❌ No	✅ Free (included)	⚠️ Limited	❌ Low (no direct Tempo data)	Small teams / quick start
-2	Tempo Timesheets Native Setup	Approval workflow, built-in reminders, reports	⭐⭐ Low-Medium	❌ No	💰 Already licensed	✅ Good	⚠️ Medium (report-based)	Most teams (recommended baseline)
-3	Tempo + Slack Integration	Team reminders, visibility, peer pressure	⭐⭐ Low-Medium	❌ No	💰 Free/Existing	✅ Good	❌ Low (generic reminders)	Culture-driven teams
-4	Tempo + Zapier / Make	Targeted reminders (only defaulters), automation workflows	⭐⭐⭐ Medium	❌ No-code	💰 Paid (₹2K–₹5K/month approx)	✅ High	✅ High	Growing teams needing smart automation
-5	Tempo API + Custom Script	Fully automated detection, smart nudges, escalation	⭐⭐⭐⭐ High	✅ Yes	💰 Infra cost (low)	🚀 Very High	✅ Very High	Mature engineering org
-6	Hard Enforcement (Policy-based)	Blocking leave/sprint, performance linkage	⭐⭐ Medium	❌ No	✅ Free	🚀 Very High	✅ Very High	Strict org / compliance-heavy
-🧠 Straight Recommendation (No-Code Only)
-Since you said No-Code, here’s the honest ranking:
-
-🥇 Best Practical Setup
-👉 Option 2 + Option 3 combined
-
-Tempo reminders + reports
-
-Slack team nudges
-
-✔ Zero effort
-✔ No cost
-✔ 80–90% problem solved
-
-🥈 Best Smart No-Code (Advanced)
-👉 Add Option 4 (Zapier/Make)
-
-✔ Sends reminders only to defaulters
-✔ Removes noise
-✔ Feels intelligent
-
-⚠️ Reality (Important)
-Pure Jira Automation alone = ❌ not enough
-
-Without behavior nudges = ❌ people will forget
-
-Without visibility = ❌ managers will still chase
-
-🏁 Final Verdict
-If you want	Go with
-Quick fix (today)	Option 2 (Tempo setup)
-Strong system (no code)	Option 2 + 3
-Smart automation	Option 4
-Enterprise-grade	Option 5
-If you want, I can next:
-👉 Design Zapier flow (step-by-step, no-code)
-👉 Or give exact Tempo settings checklist (screenshot-level guidance)
-
-
-Tell me step by step JIRA integration for Option 2 
-
-Alright — here’s a step-by-step, no-code, exact setup for
-👉 Option 2: Tempo Timesheets Native Setup inside Jira
-
-This is what you can actually implement today without engineering help.
-
-🧭 STEP 1: Enable Timesheet Approval Process
-📍 Where:
-Jira Settings → Apps → Tempo → Timesheets → Approval
-
-✅ Do this:
-Set Approval Period → Weekly
-
-Set Period Start → Monday (or your org standard)
-
-Enable:
-
-✅ Require timesheet submission
-
-✅ Require approval
-
-🎯 Outcome:
-Every user MUST submit weekly timesheet
-
-System tracks submission status
-
-⏰ STEP 2: Configure Deadline (Critical)
-📍 Where:
-Tempo → Settings → Timesheets → Period Configuration
-
-✅ Set:
-Submission deadline → Friday 6:00 PM
-
-Approval deadline → (optional) Monday
-
-🎯 Outcome:
-Clear cut-off → no ambiguity
-
-Enables reminder triggers
-
-🔔 STEP 3: Enable Automatic Reminders (Most Important)
-📍 Where:
-Tempo → Settings → Notifications
-
-✅ Configure:
-1. Incomplete Timesheet Reminder
-Trigger: Before submission deadline
-
-Time: Thursday (e.g., 3 PM)
-
-2. Final Reminder
-Trigger: Same day
-
-Time: Friday (e.g., 12 PM)
-
-3. Overdue Reminder
-Trigger: After deadline
-
-Time: Friday (6:30 PM)
-
-🎯 Outcome:
-Users get auto nudges
-
-No manager follow-up needed
-
-📊 STEP 4: Create Defaulter Report (Manager Visibility)
-📍 Where:
-Tempo → Reports
-
-✅ Steps:
-Create new report → Timesheet Report
-
-Add filters:
-
-Period → Current Week
-
-Group by → User
-
-Add column → Logged Hours
-
-Save as:
-👉 “Weekly Timesheet Compliance”
-
-📩 STEP 5: Schedule Report to Managers
-📍 Inside Report:
-Click → Schedule / Subscribe
-
-✅ Configure:
-Frequency → Weekly (Friday evening)
-
-Recipients → Managers / Leads
-
-Format → PDF / Email
-
-🎯 Outcome:
-Managers see only defaulters
-
-No need to chase everyone
-
-💬 STEP 6 (Optional but Powerful): Slack Reminder via Jira
-📍 Use:
-Jira Cloud for Slack
-
-✅ Steps:
-Install Jira Slack app
-
-Connect workspace
-
-Create automation:
-
-Jira Settings → Automation → New Rule
-
-Trigger → Scheduled (Friday 3 PM)
-
-Action → Send Slack message
-
-Message:
-
-Reminder: Submit your Tempo timesheet before 6 PM today.
-🎯 Outcome:
-Team-level visibility
-
-Social pressure works better than emails
-
-🔁 FINAL FLOW (What You Achieve)
-Monday–Wednesday → (optional logging)
-
-Thursday → Auto reminder (Tempo)
-
-Friday 12 PM → Final reminder
-
-Friday 3 PM → Slack nudge
-
-Friday 6 PM → Deadline
-
-Friday evening → Report to managers
-🚨 COMMON MISTAKES (Avoid These)
-❌ Not setting deadline → reminders useless
-❌ Only 1 reminder → people ignore
-❌ No report → managers still chase
-❌ No approval → no accountability
-
-🏁 FINAL RESULT
-After this setup:
-
-✅ 80–90% compliance automatically
-
-✅ Managers stop chasing
-
-✅ Clear audit trail
-
-If you want next:
-👉 I can give exact screenshots-level mapping (where to click in UI)
-👉 Or help you convert this into leadership demo PPT / video script
-
-
-Option 2 and 3 
-
-Great — combining Option 2 + Option 3 is the best no-code setup you can deploy quickly and still impress leadership.
-
-👉 Stack:
-
-Tempo Timesheets (tracking + reminders + reports)
-
-Jira (automation)
-
-Slack (visibility + nudges)
-
-Jira Cloud for Slack (bridge)
-
-🧭 COMPLETE STEP-BY-STEP (Option 2 + 3)
-🔹 PART 1: Tempo Setup (Foundation)
-✅ 1. Enable Weekly Timesheet Approval
-Path:
-Jira Settings → Apps → Tempo → Timesheets → Approval
-
-Period → Weekly
-
-Start → Monday
-
-Enable:
-
-✔ Require submission
-
-✔ Require approval
-
-✅ 2. Set Submission Deadline
-Path:
-Tempo → Settings → Timesheets
-
-Deadline → Friday 6 PM
-
-👉 This is your anchor for all automation
-
-✅ 3. Configure Tempo Reminders
-Path:
-Tempo → Settings → Notifications
-
-Set:
-
-Reminder	When	Purpose
-Incomplete Reminder	Thursday 3 PM	Early nudge
-Final Reminder	Friday 12 PM	Urgency
-Overdue Reminder	Friday 6:30 PM	Escalation
-✅ 4. Create Manager Report
-Path:
-Tempo → Reports
-
-Report Type → Timesheet Report
-
-Group → User
-
-Period → Current week
-
-Metric → Logged hours
-
-👉 Save as: “Timesheet Compliance Report”
-
-✅ 5. Schedule Report
-Frequency → Weekly (Friday evening)
-
-Recipients → Managers
-
-👉 Managers now see defaulters automatically
-
-🔹 PART 2: Slack Integration (Game Changer)
-✅ 6. Install Slack Integration
-Install:
-👉 Jira Cloud for Slack
-
-Connect Jira ↔ Slack workspace
-
-Authorize channels
-
-✅ 7. Create Team Reminder (Jira Automation)
-Path:
-Jira Settings → Automation → Create Rule
-
-Rule Config:
-🔸 Trigger
-Scheduled → Every Friday → 3 PM
-
-🔸 Action → Send Slack Message
-Channel → #team-channel
-
-Message:
-
-⏰ Timesheet Reminder
-
-Please submit your Tempo timesheet before 6 PM today.
-
-Let’s close the week clean ✅
-✅ 8. (Optional) Daily Reminder
-Create another rule:
-
-Trigger → Daily at 5 PM
-
-Message:
-
-Quick reminder: Log your time before you wrap up today ⏳
-👉 This is behavior correction, not just compliance
-
-🔥 FINAL SYSTEM FLOW
-Mon–Wed → Users log time
-
-Thursday → Tempo reminder (auto)
-
-Friday 12 PM → Tempo final reminder
-
-Friday 3 PM → Slack team reminder
-
-Friday 6 PM → Deadline
-
-Friday 6:30 PM → Overdue alert (Tempo)
-
-Friday evening → Manager report (auto)
-🧠 WHY THIS WORKS (Important Insight)
-Component	Role
-Tempo	Tracks + enforces
-Slack	Creates visibility + peer pressure
-Reports	Removes manager follow-up
-👉 You’re solving system + behavior + visibility together
-
-⚠️ LIMITATION (Be Honest)
-Slack reminder = broadcast only
-
-It does NOT target only defaulters
-
-👉 But still works because:
-
-Public reminders → higher compliance
-
-No extra cost / no complexity
-
-🏁 FINAL RESULT
-After this setup:
-
-✅ 85–90% compliance
-
-✅ Zero manual chasing
-
-✅ Clear audit trail
-
-✅ Leadership-ready system
-
-🚀 If You Want Next Level
-I can upgrade this to:
-
-🎯 Defaulter-only Slack alerts (still no-code via Zapier)
-
-📊 Dashboard with compliance %
-
-🎥 Demo video script for leadership
-
-Just say “advanced” 👍
-
-
-
-
